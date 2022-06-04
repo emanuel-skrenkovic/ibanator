@@ -6,3 +6,6 @@ run:
 
 test:
 	go test -v ./...
+
+build-image:
+	docker build -f Dockerfile --tag ibanator:latest .

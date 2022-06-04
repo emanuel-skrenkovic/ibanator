@@ -185,11 +185,6 @@ func mod97(input string) int {
 
 // ValidateIBAN
 // https://en.wikipedia.org/wiki/International_Bank_Account_Number#Modulo_operation_on_IBAN
-//
-//
-// Country code
-// Number of characters in the IBAN correspond to the number specified for the country code
-// BBAN format specified for the country code
 func ValidateIBAN(iban string) (bool, error) {
 	ibanLen := len(iban)
 
