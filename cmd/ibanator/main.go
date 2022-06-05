@@ -25,7 +25,7 @@ type IBANValidationResponse struct {
 // @Description Runs validation on IBAN. The response gives the validation result, and, if the validation failed, the reason for the failure.
 // @Accept json
 // @Produce json
-// @Param iban body string true "AL35202111090000000001234567" "AL35202111090000000001234567"
+// @Param iban body string true "AL35202111090000000001234567"
 // @Success 200 {object} Response{data=IBANValidationResponse} "Response wrapper"
 // @Failure 400  {object} Response{error=string} "Response wrapper containing only an error string"
 // @Router /iban/validate [post]
@@ -49,7 +49,6 @@ func validateIBAN(c *gin.Context) {
 
 // @title       IBANator
 // @description Service for validating IBAN.
-
 // @host      localhost:8080
 // @BasePath  /
 func main() {
