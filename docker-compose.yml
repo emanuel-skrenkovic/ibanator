@@ -1,0 +1,8 @@
+version: '2.4'
+services:
+  ibanator-api:
+    container_name: ibanator.api
+    build:
+        dockerfile: Dockerfile
+    ports:
+        - "8080:8080"
