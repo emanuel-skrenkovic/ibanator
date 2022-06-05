@@ -1,0 +1,59 @@
+basePath: /
+definitions:
+  main.IBANValidationResponse:
+    properties:
+      invalidReason:
+        type: string
+      'valid:':
+        type: boolean
+    type: object
+  main.Response:
+    properties:
+      data: {}
+      error:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Service for validating IBAN.
+  title: IBANator
+paths:
+  /iban/validate:
+    post:
+      consumes:
+      - application/json
+      description: Runs validation on IBAN. The response gives the validation result,
+        and, if the validation failed, the reason for the failure.
+      parameters:
+      - description: AL35202111090000000001234567
+        in: body
+        name: iban
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Response wrapper
+          schema:
+            allOf:
+            - $ref: '#/definitions/main.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/main.IBANValidationResponse'
+              type: object
+        "400":
+          description: Response wrapper containing only an error string
+          schema:
+            allOf:
+            - $ref: '#/definitions/main.Response'
+            - properties:
+                error:
+                  type: string
+              type: object
+      summary: Validates IBAN
+      tags:
+      - IBAN validation
+swagger: "2.0"
