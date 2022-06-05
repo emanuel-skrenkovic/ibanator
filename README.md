@@ -20,3 +20,6 @@ go run cmd/ibanator/main.go
 * [Go](https://go.dev/) (written in 1.18.3)
 * [Docker](https://www.docker.com/)
 * [make](https://www.gnu.org/software/make/) (optional)
+
+## API definition
+The API contains a [Swagger](https://swagger.io) definition which is accessible at http://localhost:8080/swagger/index.html while the application is running.
