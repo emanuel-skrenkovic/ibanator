@@ -69,7 +69,9 @@ func mod97(input string) int {
 
 	finalRemainder, err := strconv.Atoi(modDigits)
 	if err != nil {
-		panic(err) // TODO: need something better
+		// Should not fail after all the previous calculations.
+		// Still need a better solution.
+		panic(err)
 	}
 
 	return finalRemainder

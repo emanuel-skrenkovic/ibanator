@@ -31,12 +31,24 @@ const docTemplate = `{
                 "summary": "Validates IBAN",
                 "parameters": [
                     {
-                        "description": "AL35202111090000000001234567",
-                        "name": "iban",
+                        "description": "{ ",
+                        "name": "IBANValidationRequest",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/main.IBANValidationRequest"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "iban": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 ],
@@ -82,6 +94,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "main.IBANValidationRequest": {
+            "type": "object",
+            "required": [
+                "iban"
+            ],
+            "properties": {
+                "iban": {
+                    "type": "string"
+                }
+            }
+        },
         "main.IBANValidationResponse": {
             "type": "object",
             "properties": {

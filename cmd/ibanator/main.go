@@ -19,26 +19,30 @@ type IBANValidationResponse struct {
 	InvalidReason string `json:"invalidReason,omitempty"`
 }
 
+type IBANValidationRequest struct {
+	IBAN string `json:"iban" binding:"required"`
+}
+
 // @BasePath /
 // @Summary Validates IBAN
 // @Tags IBAN validation
 // @Description Runs validation on IBAN. The response gives the validation result, and, if the validation failed, the reason for the failure.
 // @Accept json
 // @Produce json
-// @Param iban body string true "AL35202111090000000001234567"
+// @Param IBANValidationRequest body IBANValidationRequest{iban=string} true "{ "iban": "AL35202111090000000001234567" }"
 // @Success 200 {object} Response{data=IBANValidationResponse} "Response wrapper"
 // @Failure 400  {object} Response{error=string} "Response wrapper containing only an error string"
 // @Router /iban/validate [post]
 func validateIBAN(c *gin.Context) {
-	rawData, err := c.GetRawData()
-	if err != nil || len(rawData) == 0 {
-		c.JSON(http.StatusBadRequest, Response{Error: "failed to parse input"})
+	var request IBANValidationRequest
+	if err := c.ShouldBindJSON(&request); err != nil {
+		c.JSON(http.StatusBadRequest, Response{Error: err.Error()})
 		return
 	}
 
-	// TODO: not sure if error is the correct value to use
+	// Not sure if error is the correct value to use
 	// as a "bad" response.
-	valid, err := iban.ValidateIBAN(string(rawData))
+	valid, err := iban.ValidateIBAN(request.IBAN)
 	validationResponse := IBANValidationResponse{Valid: valid}
 	if err != nil {
 		validationResponse.InvalidReason = err.Error()
@@ -47,10 +51,10 @@ func validateIBAN(c *gin.Context) {
 	c.JSON(http.StatusOK, Response{Data: validationResponse})
 }
 
-// @title       IBANator
+// @title IBANator
 // @description Service for validating IBAN.
-// @host      localhost:8080
-// @BasePath  /
+// @host localhost:8080
+// @BasePath /
 func main() {
 	r := gin.Default()
 

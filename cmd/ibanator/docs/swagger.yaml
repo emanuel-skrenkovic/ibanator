@@ -1,5 +1,12 @@
 basePath: /
 definitions:
+  main.IBANValidationRequest:
+    properties:
+      iban:
+        type: string
+    required:
+    - iban
+    type: object
   main.IBANValidationResponse:
     properties:
       invalidReason:
@@ -26,12 +33,17 @@ paths:
       description: Runs validation on IBAN. The response gives the validation result,
         and, if the validation failed, the reason for the failure.
       parameters:
-      - description: AL35202111090000000001234567
+      - description: '{ '
         in: body
-        name: iban
+        name: IBANValidationRequest
         required: true
         schema:
-          type: string
+          allOf:
+          - $ref: '#/definitions/main.IBANValidationRequest'
+          - properties:
+              iban:
+                type: string
+            type: object
       produces:
       - application/json
       responses:
